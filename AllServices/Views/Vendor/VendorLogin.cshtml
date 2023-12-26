@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "VendorLogin";
+    Layout = "~/Views/Shared/homeMaster.cshtml";
+}
+
+
+<link href="~/Content/assets/css/style0.css" rel="stylesheet" />
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home </a></li>
+        <li class="active"> Login</li>
+    </ol>
+    <div class="registration">
+        <div class="registration_left ">
+            <div class="login-right">
+                <h2><span>Login Here.</span></h2>
+                <p>
+                    Welcome, please enter the folling to continue.
+                    If you have previously Login with us, <span>click here.</span>
+                </p>
+            </div>
+            <div class="registration_form">
+                <!-- Form -->
+                <form id="registration_form" action="@Url.Action("Login", "Home")" method="post">
+                    <div>
+                        <label>
+                            <input name="UserName" placeholder="email address:" type="email" tabindex="1" required>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input name="Password" placeholder="password" type="password" tabindex="2" required>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="submit" value="Login" id="register-submit">
+                    </div>
+
+                    <a class="login-right" href="#"><p class="login-right">Forgot Password ?</p></a>
+
+                </form>
+            </div>
+        </div>
+        <div class="registration_left">
+            <div class=" login-right">
+                <h2>NEW REGISTRATION</h2>
+                <p>Dear Customer, you can sell and buy your property quickly by creating an account. If you have already created an account then you can login from here.</p>
+
+                <a href="~/Vendor/VendorRegistration">
+                    <input type="button" value="Create an Account" class="acount-btn" />
+
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+

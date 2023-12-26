@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "VendorRegistration";
+    Layout = "~/Views/Shared/homeMaster.cshtml";
+}
+
+<link href="~/Content/assets/css/style0.css" rel="stylesheet" />
+<div class="container">
+
+    <div class="registration">
+        <div class="registration_left m-3">
+            <h2>new user? <span> create an account </span></h2>
+
+            <div class="registration_form">
+                <!-- Form -->
+                @using (Html.BeginForm("VendorRegistration", "Vendor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div>
+                        <label>
+                            <input placeholder="first name:" name="First_Name" type="text" tabindex="1" required autofocus>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="last name:" name="Last_Name" type="text" tabindex="2" required autofocus>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="email address:" name="Email_Id" type="email" tabindex="3" required>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="Mobile:" name="Mobile" type="text" tabindex="4" required>
+                        </label>
+                    </div>
+                    <div class="sky_form1">
+                        <ul style="margin-left:20px;">
+                            <li><label class="radio left"><input type="radio" value="Male" name="Gender" checked=""><i></i>Male</label></li>
+                            <li><label class="radio"><input type="radio" value="Female" name="Gender"><i></i>Female</label></li>
+                            <div class="clearfix"></div>
+                        </ul>
+                    </div>
+                  
+                    <div class="form-control">
+                        <label>
+
+                            <select name="State" onchange="getDist(this)" id="state" aria-label="Default select example" required>
+                                <option>Select State</option>
+                                @foreach (var row in ViewBag.uploadservices.Binddisplay)
+                                {
+                                    <option value="@row.Id">@row.State</option>
+                                }
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="form-control">
+                        <label>
+                            <select id="districtdiv" class="form-select" aria-label="Default select example" name="District" >
+
+                                <option class="form-control" required>Select District</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="form-control">
+                        <label>
+                            <select id="cityddl" class="form-select" aria-label="Default select example" name="City_location" required>
+
+                                <option class="form-control">Select City</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label>
+                            <input placeholder="Pincode:" name="Pincode" type="text" tabindex="4" required>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="password:" name="Password" type="password" tabindex="5" required>
+                        </label>
+                    </div> <div>
+                        <label>
+                            <input placeholder="Re Password:" name="Re_Password" type="password" tabindex="6" required>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-9">
+                            <input type="submit" value="Submit" />
+                        </div>
+                    </div>
+
+                    <div class="sky-form">
+                        <label class="checkbox"><input type="checkbox" name="checkbox">i agree to claco.in  </label>
+                    </div>
+                }
+                <!-- /Form -->
+            </div>
+        </div>
+
+
+
+        <div class="registration_left">
+            <div class=" login-right">
+                <h2>Do You Have an <span> Account? </span></h2>
+                <p>Dear Customer, you can sell and buy your property quickly by creating an account. If you have already created an account then you can login from here.</p>
+                <a href="~/Vendor/VendorLogin">
+                    <input type="button" value="Login Here" class="acount-btn" />
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<!-- end registration -->
+
+
+
+<script>
+
+    function getDist(obj) {
+
+        document.getElementById("districtdiv").innerHTML = "";
+
+        var category = obj.value;
+        $.post("/Home/getdistrictbystate", { state: category }, function (data) {
+
+            console.log(data);
+            var select = document.getElementById("districtdiv");
+
+            var option = document.createElement("option");
+            option.setAttribute("value", "0");
+
+            option.innerHTML = "--select--";
+            select.appendChild(option);
+            select.setAttribute("onchange", "getcitybyDistrct(this)");
+
+            for (var i = 0; i < data.Binddisplay.length; i++) {
+                var option = document.createElement("option");
+                option.setAttribute("value", data.Binddisplay[i].Id);
+                option.innerHTML = data.Binddisplay[i].District;
+
+                select.appendChild(option);
+            }
+            document.getElementById("districtdiv").appendChild(select);
+        })
+    }
+
+
+    function getcitybyDistrct(obj) {
+
+        document.getElementById("cityddl").innerHTML = "";
+
+        var category = obj.value;
+        $.post("/Home/getcitybyDistrict", { district: category }, function (data) {
+
+            console.log(data);
+            var select = document.getElementById("cityddl");
+            var option = document.createElement("option");
+            option.setAttribute("value", "0");
+            option.innerHTML = "--select--";
+            select.appendChild(option);
+
+
+            for (var i = 0; i < data.Binddisplay.length; i++) {
+
+                var option = document.createElement("option");
+                option.setAttribute("value", data.Binddisplay[i].Id);
+                option.innerHTML = data.Binddisplay[i].City;
+
+                select.appendChild(option);
+            }
+            document.getElementById("cityddl").appendChild(select);
+        })
+    }
+</script>
+
+
+

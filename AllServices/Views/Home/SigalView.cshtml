@@ -1,0 +1,55 @@
+﻿@model AllServices.Models.AllDetails
+
+@{
+    ViewBag.Title = "SigalView";
+    Layout = "~/Views/Shared/homeMaster.cshtml";
+}
+@using System.Data
+@using AllServices.Models
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="container">
+        @if (Model.dt1.Rows.Count > 0)
+        {
+            foreach (DataRow dr in Model.dt1.Rows)
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img src="~/Servepic/@dr["Image"]" alt="Alternate Text" />
+                    </div>
+                    <div class="col-sm-12 mt-5">
+                        <h1>@dr["Id"]</h1>
+                        <h1>@dr["ShopName"]</h1>
+                        <h1>@dr["State"]</h1>
+                        <h1>@dr["District"]</h1>
+                        <h1>@dr["cityname"]</h1>
+                        <h1>@dr["OpeningTime"]</h1>
+                        <h1>@dr["ClosingTime"]</h1>
+
+                        <h1>@dr["Services"]</h1>
+                    </div>
+
+
+                    <button type="button" class="btn btn-primary btn-lg" onclick="Review(@dr["Id"])">Review</button>
+
+                </div>
+            }
+        }
+        else
+        {
+            <h1 style="color:red;font-size:150px;">!Sorry <br />Retry Again</h1>
+        }
+
+
+
+
+    </div>
+
+
+</body>
+</html>

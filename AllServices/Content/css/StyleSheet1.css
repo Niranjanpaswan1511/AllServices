@@ -1,0 +1,9 @@
+﻿#img
+{
+    cursor:pointer;
+    overflow:hidden;
+}
+#D-1 {
+   border: 1px solid black;
+   height:300px;
+}

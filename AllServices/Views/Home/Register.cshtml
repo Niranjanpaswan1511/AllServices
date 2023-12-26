@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/homeMaster.cshtml";
+}
+<style>
+    .form-control {
+        width: 300px;
+    }
+</style>
+<!-- Custom Theme files -->
+<!-- Custom Theme files -->
+<!--//theme-style-->
+<!--region Added by Shivu-->
+<link href="~/Content/assets/css/style0.css" rel="stylesheet" />
+<div class="container">
+
+    <div class="registration">
+        <div class="registration_left m-3">
+            <h2>new user? <span> create an account </span></h2>
+
+            <div class="registration_form">
+                <!-- Form -->
+                @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div>
+                        <label>
+                            <input placeholder="first name:" name="First_Name" type="text" tabindex="1" required autofocus>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="last name:" name="Last_Name" type="text" tabindex="2" required autofocus>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="email address:" name="Email_Id" type="email" tabindex="3" required>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="Mobile:" name="Mobile" type="text" tabindex="4" required>
+                        </label>
+                    </div>
+                    <div class="sky_form1">
+                        <ul style="margin-left:20px;">
+                            <li><label class="radio left"><input type="radio" value="Male" name="Gender" checked=""><i></i>Male</label></li>
+                            <li><label class="radio"><input type="radio" value="Female" name="Gender"><i></i>Female</label></li>
+                            <div class="clearfix"></div>
+                        </ul>
+                    </div>
+                    <div>
+                        <label>
+                            <input placeholder="password:" name="Password" type="password" tabindex="5" required>
+                        </label>
+                    </div> <div>
+                        <label>
+                            <input placeholder="Re Password:" name="Re_Password" type="password" tabindex="6" required>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-9">
+                            <input type="submit" value="Submit" />
+                        </div>
+                    </div>
+
+                    <div class="sky-form">
+                        <label class="checkbox"><input type="checkbox" name="checkbox">i agree to claco.in @*<a class="terms" href="#"> terms of service</a>*@ </label>
+                    </div>
+                }
+                <!-- /Form -->
+            </div>
+        </div>
+
+
+
+        <div class="registration_left">
+            <div class=" login-right">
+                <h2>Do You Have an <span> Account? </span></h2>
+                <p>Dear Customer, you can sell and buy your property quickly by creating an account. If you have already created an account then you can login from here.</p>
+                <a href="~/Home/login">
+                    <input type="button" value="Login Here" class="acount-btn" />
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+

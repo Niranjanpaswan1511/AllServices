@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "ContactUs";
+    Layout = "~/Views/Shared/homeMaster.cshtml";
+}
+
+
+<style>
+    .registration {
+        margin-top: 100px;
+    }
+</style>
+
+<link href="~/Content/assets/css/style0.css" rel="stylesheet" />
+<div class="container">
+
+    <div class="registration">
+        <div class="registration_left">
+            <h2> <span> Contact Us </span></h2>
+
+            <div class="registration_form">
+                <!--Contact Form -->
+                @using (Html.BeginForm("ContactUs", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div>
+                        Name
+                        <label>
+                            <input placeholder="Name:" name="Name" type="text" tabindex="1" required autofocus>
+                        </label>
+                    </div>
+                    <div>
+                        Email_Id
+                        <label>
+                            <input placeholder="Email Id:" name="Email" type="email" tabindex="2" required autofocus>
+                        </label>
+                    </div>
+                    <div>
+                        Mobile
+                        <label>
+                            <input placeholder="Mobile number:" name="Mobile" type="tel" tabindex="3" required autofocus>
+                        </label>
+                    </div>
+                    <label>Message</label>
+                    <textarea name="Message" rows="5" cols="62" placeholder="Type your message "></textarea>
+
+                    <div class="form-group">
+                        <div class="col-md-9">
+                            <input type="submit" value="Submit" />
+                        </div>
+                    </div>
+
+                }
+                <!-- /End Contact Form -->
+            </div>
+        </div>
+
+        <div class="registration_left">
+            <div class=" login-right">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.7502265651046!2d80.98881051145928!3d26.784230676626873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be4ac0341a871%3A0x96e094c54c92ecc7!2sLulu%20Mall%2C%20Lucknow!5e0!3m2!1sen!2sin!4v1702361497133!5m2!1sen!2sin" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+   

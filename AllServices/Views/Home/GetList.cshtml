@@ -1,0 +1,62 @@
+﻿@model AllServices.Models.AllDetails
+@using AllServices.Models;
+@{
+    ViewBag.Title = "GetList";
+    Layout = "~/Views/Shared/homeMaster.cshtml";
+}
+@using System.Data
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="~/Content/css/StyleSheet1.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+
+        @if (Model.tbl1.Rows.Count > 0)
+        {
+            foreach (DataRow dr in Model.tbl1.Rows)
+            {
+                <div class="row mb-3 border-2 border-danger" id="D-1" style="height:350px;">
+                    <div class="col-sm-5" id="img">
+                        <img src="~/Servepic/@dr["Image"]" class="img-responsive" alt="Alternate Text" height="100px;" />
+                    </div>
+                    <div class="col-sm-6">
+                        <h1>@dr["Id"]</h1>
+                        <h1>@dr["ShopName"]</h1>
+                        <h1>@dr["State"]</h1>
+                        <h1>@dr["District"]</h1>
+                        <h1>@dr["cityname"]</h1>
+                        <h1>@dr["OpeningTime"]</h1>
+                        <h1>@dr["ClosingTime"]</h1>
+                    
+                        <h1>@dr["Services"]</h1>
+                    </div>
+                    <br />
+                    <button type="button" class="btn btn-primary btn-lg" onclick="contact(@dr["Id"])">Contact</button>
+                </div>
+            }
+
+        }
+       else
+            {
+          
+            <h1 class="text-center text-danger" style="font-size:150px;">
+                Sorry!
+                Item Not Availble 
+            </h1>
+            }
+
+
+
+
+    </div>
+</body>
+</html>
+
+<script>
+    function contact(obj) {
+        window.location.href = "/Home/SigalView?id=" + obj;
+    }
+
+</script>

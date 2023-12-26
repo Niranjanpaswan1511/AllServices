@@ -1,0 +1,182 @@
+﻿@model AllServices.Models.AllDetails
+
+@{
+    Layout = "~/Views/Shared/homeMaster.cshtml";
+}
+
+<link href='http://fonts.googleapis.com/css?family=Montserrat|Raleway:400,200,300,500,600,700,800,900,100' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Aladin' rel='stylesheet' type='text/css'>
+<!-- start menu -->
+<link href="~/Content/assets/css/style0.css" rel="stylesheet" />
+<div class="container">
+
+    <div>
+        <div class="registration">
+            <div class="registration_left">
+                <h2>new user? <span> create an account </span></h2>
+
+                <div class="registration_form">
+                    <!-- Form -->
+                    @using (Html.BeginForm("UploadServices", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div>
+                            <label>
+                                <span> Name</span>
+                                <input placeholder="Shop Name:" name="ShopName" type="text" tabindex="1" required autofocus>
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label>
+
+                                <select  name="State" onchange="getDist(this)" id="state" aria-label="Default select example">
+                                    <option>Select State</option>
+
+                                    @foreach (var row in ViewBag.uploadservices.Binddisplay)
+                                    {
+                                        <option value="@row.Id">@row.State</option>
+                                    }
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="form-control">
+                            <label>
+                                <select id="districtdiv" class="form-select" aria-label="Default select example" name="District">
+
+                                    <option class="form-control">Select District</option>
+                                </select>
+                            </label>
+                        </div>
+                               
+                        <div class="form-control">
+                            <label>
+                                <select id="cityddl" class="form-select" aria-label="Default select example" name="City">
+
+                                    <option class="form-control">Select City</option>
+                                </select>
+                            </label>
+                        </div>
+                    
+                        <div>
+                            <label>
+                                <span> Opening Time</span>
+                                <input placeholder="Opening Time:" name="OpeningTime" type="text" tabindex="5" required>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <span> Closing Time</span>
+                                <input placeholder="Closing Time:" name="ClosingTime" type="text" tabindex="4" required>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <span> Mobile Number</span>
+                                <input placeholder="Mobile Number" name="MobileNumber" type="tel" tabindex="6" required>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label>
+                                <span> Upload Picture</span>
+                                <input class="form-control" type="file" name="Image" tabindex="7" required>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+
+                                <select name="Services" aria-label="Default select example">
+                                    <option>Select Services</option>
+
+                                    @foreach (var row in ViewBag.GetSevicesName.Binddisplay)
+                                    {
+                                        <option value="@row.ServiceId">@row.ServiceName</option>
+                                    }
+                                </select>
+                            </label>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+<script>
+
+    function getDist(obj) {
+
+        document.getElementById("districtdiv").innerHTML = "";
+
+        var category = obj.value;
+        $.post("/Home/getdistrictbystate", { state: category }, function (data) {
+
+            console.log(data);
+            var select = document.getElementById("districtdiv");
+
+            var option = document.createElement("option");
+            option.setAttribute("value", "0");
+
+            option.innerHTML = "--select--";
+            select.appendChild(option);
+            select.setAttribute("onchange", "getcitybyDistrct(this)");
+
+            for (var i = 0; i < data.Binddisplay.length; i++) {
+                var option = document.createElement("option");
+                option.setAttribute("value", data.Binddisplay[i].Id);
+                option.innerHTML = data.Binddisplay[i].District;
+
+                select.appendChild(option);
+            }
+            document.getElementById("districtdiv").appendChild(select);
+        })
+    }
+
+
+    function getcitybyDistrct(obj) {
+
+        document.getElementById("cityddl").innerHTML = "";
+
+        var category = obj.value;
+        $.post("/Home/getcitybyDistrict", { district: category }, function (data) {
+
+            console.log(data);
+            var select = document.getElementById("cityddl");
+            var option = document.createElement("option");
+            option.setAttribute("value", "0");
+            option.innerHTML = "--select--";
+            select.appendChild(option);
+
+
+            for (var i = 0; i < data.Binddisplay.length; i++) {
+
+                var option = document.createElement("option");
+                option.setAttribute("value", data.Binddisplay[i].Id);
+                option.innerHTML = data.Binddisplay[i].City;
+
+                select.appendChild(option);
+            }
+            document.getElementById("cityddl").appendChild(select);
+        })
+    }
+</script>
+
