@@ -137,5 +137,23 @@ namespace AllServices.Models
             set=dt.ExeProcDataset(ProcName, sqlParameter);
             return set;
         }
+
+
+        // VendorLogin
+
+        public DataTable VendorLogin(AllDetails d,string ProcName) {
+
+             DataTable dt1=new DataTable();
+            SqlParameter[] sqlParameters = new SqlParameter[] {
+            new SqlParameter("UserName",d.Email),
+            new SqlParameter("password",d.Password)
+            };
+             
+            dt1=dt.ExecProcDataTAble(ProcName, sqlParameters);
+            return dt1; 
+
+
+
+        }
     }
 }

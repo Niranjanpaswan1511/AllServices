@@ -93,7 +93,7 @@ namespace AllServices.Models
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@First_Name", vreg.First_Name);
                         cmd.Parameters.AddWithValue("@Last_Name", vreg.Last_Name);
-                        cmd.Parameters.AddWithValue("@Email_Id", vreg.Email);
+                        cmd.Parameters.AddWithValue("@Email_Id", vreg.Email_Id);
                         cmd.Parameters.AddWithValue("@Mobile", vreg.Mobile);
                         cmd.Parameters.AddWithValue("@Gender", vreg.Gender);
                         cmd.Parameters.AddWithValue("@State", vreg.State);
@@ -280,6 +280,32 @@ namespace AllServices.Models
             }
             return ds;
 
+        }
+
+        public DataTable ExecProcDataTAble(string procName, SqlParameter[] parameters)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                con.Open();
+                SqlCommand cmd=new SqlCommand(procName, con);
+                cmd.CommandType= CommandType.StoredProcedure;
+                foreach(SqlParameter param in parameters)
+                {
+                    cmd.Parameters.Add(param);
+                }
+                SqlDataAdapter adp=new SqlDataAdapter(cmd);
+                adp.Fill(dt);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { 
+                con.Close();
+            }
+            return dt;  
         }
 
 

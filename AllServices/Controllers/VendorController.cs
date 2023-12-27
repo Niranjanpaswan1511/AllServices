@@ -1,6 +1,7 @@
 ﻿using AllServices.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -37,9 +38,48 @@ namespace AllServices.Controllers
         {
             return View();
         }
-        public ActionResult demo()
+        [HttpPost]
+
+        public ActionResult VendorLogin(AllDetails d)
         {
-                return View();
+           DataTable dt= business_Layer.VendorLogin(d, "VendorLogin");
+            if (dt != null)
+            {
+                Session["UserName"]=d.Email.ToString();
+                return RedirectToAction("DashBoard");
+            }
+
+           return View();
         }
+
+
+        public ActionResult DashBoard()
+        {
+            if (Session["UserName"]!= null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("VendorLogin");
+            }
+        
+        }
+
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            Session.RemoveAll();
+            Session.Abandon();
+            return View("VendorLogin");
+           
+        }
+
+        public ActionResult ViewList()
+        {
+            return View();
+        }
+
     }
 }
