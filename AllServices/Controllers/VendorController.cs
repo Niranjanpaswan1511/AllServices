@@ -42,22 +42,46 @@ namespace AllServices.Controllers
 
         public ActionResult VendorLogin(AllDetails d)
         {
+           Datalayer k=new Datalayer();
            DataTable dt= business_Layer.VendorLogin(d, "VendorLogin");
             if (dt != null)
             {
                 Session["UserName"]=d.Email.ToString();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Session["Id"] = dr["Id"].ToString();
+
+                }
                 return RedirectToAction("DashBoard");
             }
 
            return View();
         }
 
+        
+
 
         public ActionResult DashBoard()
         {
             if (Session["UserName"]!= null)
             {
-                return View();
+                string i = (string)Session["Id"];
+
+                string Total = business_Layer.TotalUploadServices(i, "ToTalUploadServices");
+                ViewBag.total = Total;
+
+                DataTable dt = new DataTable();
+                dt = business_Layer.GetListofServices(i);
+                AllDetails ald = new AllDetails();
+                if (dt.Rows.Count > 0)
+                {
+
+                    ald.table4 = dt;
+
+                }
+
+
+                return View(ald);
             }
             else
             {

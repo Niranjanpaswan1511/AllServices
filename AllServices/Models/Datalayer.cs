@@ -12,11 +12,14 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Web.Mvc;
 using System.Net.Http.Headers;
+using MySqlX.XDevAPI;
 
 namespace AllServices.Models
 {
     public class Datalayer
     {
+        public int VenderId;
+
        string connectionstring=("Data Source=pc1;Initial Catalog=Allservice;Integrated Security=True");
         public SqlConnection con = new SqlConnection("Data Source = pc1; Initial Catalog = Allservice; Integrated Security = True");
         private string pic;
@@ -161,6 +164,12 @@ namespace AllServices.Models
             return executeProcedureForDataTableWithOutParameter(procedure, pr);
         }
 
+        internal DataTable GetAllRating(string procedure)
+        {
+            SqlParameter[] pr=new SqlParameter[0];
+            return executeProcedureForDataTableWithOutParameter(procedure, pr);
+        }
+
         internal DataTable Getstate(string procedure)
         {
             SqlParameter[] par = new SqlParameter[0];
@@ -225,7 +234,11 @@ namespace AllServices.Models
 
         public bool uploadservices(AllDetails  ad )
         {
-                SqlConnection con = new SqlConnection(connectionstring);
+           
+        
+
+
+            SqlConnection con = new SqlConnection(connectionstring);
                 SqlCommand cmd = new SqlCommand("Proc_UploadServices", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ShopName", ad.ShopName);
@@ -237,7 +250,13 @@ namespace AllServices.Models
                 cmd.Parameters.AddWithValue("@MobileNumber", ad.MobileNumber);
                 cmd.Parameters.AddWithValue("@Image",ad.dupimg);
                 cmd.Parameters.AddWithValue("@Services", ad.Services);
+                cmd.Parameters.AddWithValue("@VendorId",ad.VenorId);
                 cmd.Parameters.AddWithValue("@IsActive", 1);
+                cmd.Parameters.AddWithValue("@RatingID", ad.RatingID);
+                cmd.Parameters.AddWithValue("@Description", ad.Description);
+
+
+
                 con.Open();
                 int i=cmd.ExecuteNonQuery();
                 if (i > 0)

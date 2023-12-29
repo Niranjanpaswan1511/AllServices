@@ -8,7 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
-
+using System.Web.UI.WebControls;
 
 namespace AllServices.Controllers
 {
@@ -85,12 +85,23 @@ namespace AllServices.Controllers
         {
             ViewBag.uploadservices=business_Layer.GetallState();
             ViewBag.GetSevicesName = business_Layer.GetAllServices();
+            ViewBag.GetRating = business_Layer.GetDDlRating();
+            DataTable dt= new DataTable();
+            string i = Session["Id"].ToString();
+            dt = business_Layer.GetListofServices(i);
+            AllDetails ald = new AllDetails();
+            if (dt.Rows.Count>0)
+            {
+              
+                ald.table4 = dt;
 
+            }
             return View();
         }
         [HttpPost]
         public ActionResult UploadServices(AllDetails ad)
         {
+            ad.VenorId = Session["Id"].ToString();
             string filename = Path.GetFileName(ad.Image.FileName);
             string filepath = Path.Combine(Server.MapPath("~/Servepic"), filename);
             ad.Image.SaveAs(filepath);
@@ -155,6 +166,8 @@ namespace AllServices.Controllers
             }
         
         }
+
+      
 
 
     }

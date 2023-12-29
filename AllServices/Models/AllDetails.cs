@@ -9,6 +9,8 @@ namespace AllServices.Models
 {
     public class AllDetails
     {
+        public DataTable table4 { get; set; }
+
         public DataTable dt1 { get; set; }
 
         public int Id { get; set; }
@@ -41,8 +43,11 @@ namespace AllServices.Models
         public List<AllDetails> Binddisplay { get; set; }
 
         public DataTable tbl1 { get; set; }
+        public string VenorId { get;  set; }
 
-
+        public string  Description { get; set; }
+        public int RatingID { get; set; }
+        public string RatingName { get; set; }
 
 
         //private int serviceId;

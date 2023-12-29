@@ -30,7 +30,7 @@
                         <div class="form-control">
                             <label>
 
-                                <select  name="State" onchange="getDist(this)" id="state" aria-label="Default select example">
+                                <select name="State" onchange="getDist(this)" id="state" aria-label="Default select example">
                                     <option>Select State</option>
 
                                     @foreach (var row in ViewBag.uploadservices.Binddisplay)
@@ -49,7 +49,7 @@
                                 </select>
                             </label>
                         </div>
-                               
+
                         <div class="form-control">
                             <label>
                                 <select id="cityddl" class="form-select" aria-label="Default select example" name="City">
@@ -58,7 +58,7 @@
                                 </select>
                             </label>
                         </div>
-                    
+
                         <div>
                             <label>
                                 <span> Opening Time</span>
@@ -85,6 +85,8 @@
                             </label>
                         </div>
                         <div>
+
+
                             <label>
 
                                 <select name="Services" aria-label="Default select example">
@@ -95,6 +97,30 @@
                                         <option value="@row.ServiceId">@row.ServiceName</option>
                                     }
                                 </select>
+                            </label>
+                        </div>
+
+
+                        <div>
+
+
+                            <label>
+
+                                <select name="RatingID" aria-label="Default select example">
+                                    <option>Select Rating</option>
+
+                                    @foreach (var row in ViewBag.GetRating.Binddisplay)
+                                    {
+                                        <option value="@row.RatingID">@row.RatingName</option>
+                                    }
+                                </select>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label>
+                                <span> Discription</span>
+                                <textarea name="Description" class="form-control"></textarea>
                             </label>
                         </div>
 

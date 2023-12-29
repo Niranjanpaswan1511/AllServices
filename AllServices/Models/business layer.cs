@@ -11,6 +11,8 @@ namespace AllServices.Models
 {
     public class business_layer
     {
+        string connectionstring = ("Data Source=pc1;Initial Catalog=Allservice;Integrated Security=True");
+        public SqlConnection con = new SqlConnection("Data Source = pc1; Initial Catalog = Allservice; Integrated Security = True");
         Datalayer dt=new Datalayer();
         public bool reg(AllDetails allDetails)
         {
@@ -62,6 +64,25 @@ namespace AllServices.Models
             return obj;
         }
 
+
+        // GEt Rating DDl 
+
+        public AllDetails GetDDlRating()
+        {
+            DataTable datatable = dt.GetAllRating("proc_GetRatingDDL");
+            List<AllDetails> ald = new List<AllDetails>();
+            foreach(DataRow dt in datatable.Rows)
+            {
+                AllDetails ald1 = new AllDetails();
+                ald1.RatingID = (int)dt["RatingID"];
+                ald1.RatingName = dt["RatingName"].ToString();
+                ald.Add(ald1);
+            }
+            AllDetails obj = new AllDetails();
+            obj.Binddisplay = ald;
+            return obj;
+        }
+
         public bool contactus(Contactus contactus) 
         {
           dt.Contact(contactus);
@@ -91,6 +112,9 @@ namespace AllServices.Models
             return obj;
 
         }
+
+
+
         public AllDetails getDistrictbyCity(string district)
         {
             DataTable dataTable = dt.getcitybyDistrict(district);
@@ -155,5 +179,35 @@ namespace AllServices.Models
 
 
         }
+
+
+        public DataTable GetListofServices(string i)
+        {
+            DataTable dt1 = new DataTable();
+            SqlParameter[] sqlParameters = new SqlParameter[] {
+            new SqlParameter("Id",i),
+            };
+          
+            dt1 = dt.ExecProcDataTAble("Proc_GetListOfServices", sqlParameters);
+            return dt1;
+        }
+
+        public string TotalUploadServices(string id,string ProcName)
+        {
+            string Total = "";
+            SqlCommand cmd = new SqlCommand(ProcName,con);  
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", id);
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter  adp=new SqlDataAdapter(cmd);
+            adp.Fill(dataTable);
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                Total = dr["TotalUploadServices"].ToString();
+            }
+            return Total;
+        }
+
+
     }
 }
